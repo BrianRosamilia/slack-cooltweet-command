@@ -1,6 +1,7 @@
-# cooltweet
+# cooltweet ![Slack logo](/slack.png)
 
-##A Slack integration that grabs a popular, recent tweet for your room
+
+##A web backend for a Slack command that grabs a popular, recent, tweet for your chat based on the topic or phrase you pass it
 
 ##Example
 
