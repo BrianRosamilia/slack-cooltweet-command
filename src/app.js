@@ -45,10 +45,23 @@ app.use(function () {
             twoDaysAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 2);
             since = twoDaysAgo.getFullYear() + '-' + twoDaysAgo.getMonth() + '-' + twoDaysAgo.getDate();
             _context.next = 8;
-            return searchAsync('search/tweets', { q: ctx.request.body.text + ' since:' + since, lang: 'en' });
+            return searchAsync('search/tweets', { q: ctx.request.body.text + ' since:' + since + ' filter:twimg', lang: 'en' });
 
           case 8:
             tweets = _context.sent;
+
+            if (tweets.statuses.length) {
+              _context.next = 13;
+              break;
+            }
+
+            _context.next = 12;
+            return searchAsync('search/tweets', { q: ctx.request.body.text + ' since:' + since, lang: 'en' });
+
+          case 12:
+            tweets = _context.sent;
+
+          case 13:
             t = _(tweets.statuses).orderBy(['retweet_count', 'favorite_count']).reverse().first();
 
 
@@ -59,7 +72,7 @@ app.use(function () {
               };
             }
 
-          case 11:
+          case 15:
           case 'end':
             return _context.stop();
         }

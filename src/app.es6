@@ -23,13 +23,16 @@ app.use(async (ctx) => {
     return;
   }
 
-  let currentDate = new Date();
-  let twoDaysAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 2);
-  let since = `${twoDaysAgo.getFullYear()}-${twoDaysAgo.getMonth()}-${twoDaysAgo.getDate()}`;
+  const currentDate = new Date();
+  const twoDaysAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 2);
+  const since = `${twoDaysAgo.getFullYear()}-${twoDaysAgo.getMonth()}-${twoDaysAgo.getDate()}`;
 
-  let tweets = await searchAsync('search/tweets', {q: `${ctx.request.body.text} since:${since}`, lang : 'en'});
+  let tweets = await searchAsync('search/tweets', {q: `${ctx.request.body.text} since:${since} filter:twimg`, lang : 'en'});
 
-  let t = _(tweets.statuses).orderBy(['retweet_count', 'favorite_count']).reverse().first();
+  if(!tweets.statuses.length){
+    tweets = await searchAsync('search/tweets', {q: `${ctx.request.body.text} since:${since}`, lang : 'en'});
+  }
+  const t =  _(tweets.statuses).orderBy(['retweet_count', 'favorite_count']).reverse().first();
 
   if(t){
     ctx.body = {
