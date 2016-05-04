@@ -27,10 +27,10 @@ app.use(async (ctx) => {
   const twoDaysAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 2);
   const since = `${twoDaysAgo.getFullYear()}-${twoDaysAgo.getMonth()}-${twoDaysAgo.getDate()}`;
 
-  let tweets = await searchAsync('search/tweets', {q: `${ctx.request.body.text} since:${since} filter:twimg`, lang : 'en'});
+  let tweets = await searchAsync('search/tweets', {q: `${ctx.request.body.text} since:${since} filter:twimg min_retweets:25 exclude:replies`, lang : 'en'});
 
   if(!tweets.statuses.length){
-    tweets = await searchAsync('search/tweets', {q: `${ctx.request.body.text} since:${since}`, lang : 'en'});
+    tweets = await searchAsync('search/tweets', {q: `${ctx.request.body.text} since:${since} min_retweets:50 exclude:replies`, lang : 'en'});
   }
   const t =  _(tweets.statuses).orderBy(['retweet_count', 'favorite_count']).reverse().first();
 
