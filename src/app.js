@@ -45,7 +45,7 @@ app.use(function () {
             twoDaysAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 2);
             since = twoDaysAgo.getFullYear() + '-' + twoDaysAgo.getMonth() + '-' + twoDaysAgo.getDate();
             _context.next = 8;
-            return searchAsync('search/tweets', { q: ctx.request.body.text + ' since:' + since + ' filter:twimg min_retweets:25 exclude:replies', lang: 'en' });
+            return searchAsync('search/tweets', { q: '"' + ctx.request.body.text + '" since:' + since + ' filter:twimg min_retweets:25 exclude:replies', lang: 'en' });
 
           case 8:
             tweets = _context.sent;
@@ -56,7 +56,7 @@ app.use(function () {
             }
 
             _context.next = 12;
-            return searchAsync('search/tweets', { q: ctx.request.body.text + ' since:' + since + ' min_retweets:50 exclude:replies', lang: 'en' });
+            return searchAsync('search/tweets', { q: '"' + ctx.request.body.text + '" since:' + since + ' min_retweets:50 exclude:replies', lang: 'en' });
 
           case 12:
             tweets = _context.sent;
