@@ -43,7 +43,7 @@ app.use(function () {
           case 3:
             currentDate = new Date();
             twoDaysAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 2);
-            since = twoDaysAgo.getFullYear() + '-' + twoDaysAgo.getMonth() + '-' + twoDaysAgo.getDate();
+            since = twoDaysAgo.getFullYear() + '-' + (twoDaysAgo.getMonth() + 1) + '-' + twoDaysAgo.getDate();
             _context.next = 8;
             return searchAsync('search/tweets', { q: '"' + ctx.request.body.text + '" since:' + since + ' filter:twimg min_retweets:25 exclude:replies', lang: 'en' });
 

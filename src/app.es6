@@ -25,7 +25,7 @@ app.use(async (ctx) => {
 
   const currentDate = new Date();
   const twoDaysAgo = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 2);
-  const since = `${twoDaysAgo.getFullYear()}-${twoDaysAgo.getMonth()}-${twoDaysAgo.getDate()}`;
+  const since = `${twoDaysAgo.getFullYear()}-${twoDaysAgo.getMonth()+1}-${twoDaysAgo.getDate()}`;
 
   let tweets = await searchAsync('search/tweets', {q: `"${ctx.request.body.text}" since:${since} filter:twimg min_retweets:25 exclude:replies`, lang : 'en'});
 
